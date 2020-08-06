@@ -15,9 +15,39 @@ namespace GradeBook
             Name = name;
         }
 
+        public void AddLetterGrade(char letter)
+        {
+            switch (letter)
+            {
+
+                case 'A':
+                    AddGrade(90);
+                    break;
+
+                case 'B':
+                    AddGrade(80);
+                    break;
+
+                case 'C':
+                    AddGrade(70);
+                    break;
+
+                default:
+                    AddGrade(0);
+                    break;
+            }
+        }
+
         public void AddGrade(double grade)
         {
-            grades.Add(grade);
+            if (grade >= 0 && grade <= 100)
+            {
+                grades.Add(grade);
+            }
+            else
+            {
+                throw new ArgumentException($"Invalid {nameof(grade)}");
+            }
         }
 
         public Statistics GetStatistics()
@@ -27,19 +57,43 @@ namespace GradeBook
             result.Highest = double.MinValue;
             result.Lowest = double.MaxValue;
 
-            foreach (var grade in grades)
+            for (var index = 0; index < grades.Count; index++)
             {
                 // Gets Highest
-                result.Highest = Math.Max(grade, result.Highest);
+                result.Highest = Math.Max(grades[index], result.Highest);
 
                 // Gets lowest
-                result.Lowest = Math.Min(grade, result.Lowest);
+                result.Lowest = Math.Min(grades[index], result.Lowest);
 
                 // Accumilator
-                result.Average += grade;
+                result.Average += grades[index];
+
             }
 
             result.Average /= grades.Count;
+
+            switch (result.Average)
+            {
+                case var average when average >= 90:
+                    result.Letter = 'A';
+                    break;
+
+                case var average when average >= 80 && average < 90:
+                    result.Letter = 'B';
+                    break;
+
+                case var average when average >= 70 && average < 80:
+                    result.Letter = 'C';
+                    break;
+
+                case var average when average >= 60 && average < 70:
+                    result.Letter = 'D';
+                    break;
+
+                default:
+                    result.Letter = 'F';
+                    break;
+            }
 
             return result;
         }

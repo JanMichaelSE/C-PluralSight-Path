@@ -5,7 +5,6 @@ namespace GradeBook.Tests
 {
     public class TypeTests
     {
-
         [Fact]
         public void StringsBehaveLikeValueTypes()
         {
