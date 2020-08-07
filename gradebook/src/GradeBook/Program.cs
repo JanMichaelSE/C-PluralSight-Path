@@ -8,17 +8,26 @@ namespace GradeBook
         static void Main(string[] args)
         {
 
-            var book = new Book("Juan");
+            var book = new DiskBook("NewTesting");
             // Using multi event delegates
-            book.GradeAdded += OnGradeAdded;
-            book.GradeAdded += OnGradeAdded;
-            book.GradeAdded -= OnGradeAdded;
             book.GradeAdded += OnGradeAdded;
 
 
             var done = false;
 
+            done = EnterGrades(book, done);
 
+            // Computes and Shows results
+            var stats = book.GetStatistics();
+
+            Console.WriteLine($"The name is {book.Name}");
+            Console.WriteLine($"Avegrae-->{stats.Average:N1}, Highest-->{stats.Highest}, Lowest-->{stats.Lowest}");
+            Console.WriteLine($"The letter grade is {stats.Letter}");
+        }
+
+        // This is polymorphic and will change depending on the type of book we recieve
+        private static bool EnterGrades(IBook book, bool done)
+        {
             while (!done)
             {
 
@@ -53,14 +62,7 @@ namespace GradeBook
 
 
             };
-
-            // Computes and Shows results
-            var stats = book.GetStatistics();
-
-            Console.WriteLine(Book._category);
-            Console.WriteLine($"The name is {book.Name}");
-            Console.WriteLine($"Avegrae-->{stats.Average:N1}, Highest-->{stats.Highest}, Lowest-->{stats.Lowest}");
-            Console.WriteLine($"The letter grade is {stats.Letter}");
+            return done;
         }
 
         static void OnGradeAdded(object sender, EventArgs e)

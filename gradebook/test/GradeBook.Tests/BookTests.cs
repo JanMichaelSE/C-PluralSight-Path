@@ -9,7 +9,7 @@ namespace GradeBook.Tests
         public void BookCalculatesAnAverageGrad()
         {
             // arrange
-            var book = new Book("");
+            var book = new InMemoryBook("");
             book.AddGrade(89);
             book.AddGrade(29);
             book.AddGrade(99);
@@ -32,10 +32,10 @@ namespace GradeBook.Tests
         public void AddGradesBetween0and100()
         {
             // arrange
-            var book = new Book("");
+            var book = new InMemoryBook("");
             book.AddGrade(105);
 
-            var book2 = new Book("");
+            var book2 = new InMemoryBook("");
             book2.AddGrade(-1);
 
             // Both values return NaN because only grades between 0 and 100 can be added
