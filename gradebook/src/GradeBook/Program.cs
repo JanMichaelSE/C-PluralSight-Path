@@ -9,6 +9,13 @@ namespace GradeBook
         {
 
             var book = new Book("Juan");
+            // Using multi event delegates
+            book.GradeAdded += OnGradeAdded;
+            book.GradeAdded += OnGradeAdded;
+            book.GradeAdded -= OnGradeAdded;
+            book.GradeAdded += OnGradeAdded;
+
+
             var done = false;
 
 
@@ -50,8 +57,15 @@ namespace GradeBook
             // Computes and Shows results
             var stats = book.GetStatistics();
 
+            Console.WriteLine(Book._category);
+            Console.WriteLine($"The name is {book.Name}");
             Console.WriteLine($"Avegrae-->{stats.Average:N1}, Highest-->{stats.Highest}, Lowest-->{stats.Lowest}");
             Console.WriteLine($"The letter grade is {stats.Letter}");
+        }
+
+        static void OnGradeAdded(object sender, EventArgs e)
+        {
+            Console.WriteLine("A book was added...");
         }
     }
 }

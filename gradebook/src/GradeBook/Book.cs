@@ -3,11 +3,14 @@ using System.Collections.Generic;
 
 namespace GradeBook
 {
+
+    public delegate void GradeAddedDelegate(object sender, EventArgs args);
+
     public class Book
     {
 
         private List<double> grades;
-        public string Name;
+        public const string _category = "";
 
         public Book(string name)
         {
@@ -15,7 +18,12 @@ namespace GradeBook
             Name = name;
         }
 
-        public void AddLetterGrade(char letter)
+        // Creates our field in the background - private string name
+        public string Name { get; set; }
+
+        // Every function has its signiture defined by the parameters. So you can overload and use the desired function depending
+        //  on the arguement being passed in this case AddGrade(double) or AddGrade(char)
+        public void AddGrade(char letter)
         {
             switch (letter)
             {
@@ -43,12 +51,18 @@ namespace GradeBook
             if (grade >= 0 && grade <= 100)
             {
                 grades.Add(grade);
+                if (GradeAdded != null)
+                {
+                    GradeAdded(this, new EventArgs());
+                }
             }
             else
             {
                 throw new ArgumentException($"Invalid {nameof(grade)}");
             }
         }
+
+        public event GradeAddedDelegate GradeAdded;
 
         public Statistics GetStatistics()
         {
