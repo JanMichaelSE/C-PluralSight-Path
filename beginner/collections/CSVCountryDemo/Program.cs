@@ -10,18 +10,19 @@ namespace CSVCountryDemo
             string filePath = @"C:\Users\janmm\Documents\VS Code Development\C# Cert Training\PluralSight Beginner\beginner\collections\Pop by Largest Final.csv";
             CsvReader reader = new CsvReader(filePath);
 
-            List<Country> countries = reader.ReadAllCountries();
-            Country lilliput = new Country("Lilliput", "LIL", "Somewhere", 2_000_000);
-            // Inserts a Value in the desired index
-            int lilliputIndex = countries.FindIndex(x => x.Population < 2_000_000);
-            countries.Insert(lilliputIndex, lilliput);
+            Dictionary<string, Country> countries = reader.ReadAllCountries();
 
-            // Removes the index we specifiy in the list
-            countries.RemoveAt(lilliputIndex);
+            Console.Write("Enter country code-->");
+            string userInput = Console.ReadLine();
 
-            foreach (Country country in countries)
+            if (countries.ContainsKey(userInput))
             {
+                Country country = countries[userInput];
                 Console.WriteLine($"{PopulationFormatter.FromatPopulation(country.Population).PadLeft(15)}: {country.Name}");
+            }
+            else
+            {
+                Console.WriteLine($"Sorry the code {userInput} does not exist.");
             }
         }
     }
