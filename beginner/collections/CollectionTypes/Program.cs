@@ -16,7 +16,7 @@ namespace CollectionTypes
                 "Sunday"
             };
 
-            Console.Write("What day is it-->"); `
+            Console.Write("What day is it-->");
             int iDay = int.Parse(Console.ReadLine());
 
             string chosenDay = daysOfWeek[iDay - 1];
