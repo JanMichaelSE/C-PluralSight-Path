@@ -4,7 +4,7 @@ namespace CSVCountryDemo
 {
     public class PopulationFormatter
     {
-        public static string FromatPopulation(int population)
+        public static string FormatPopulation(int population)
         {
             if (population == 0)
             {

@@ -13,9 +13,9 @@ namespace CSVCountryDemo
             _csvFilePath = csvFilePath;
         }
 
-        public Dictionary<string, Country> ReadAllCountries()
+        public List<Country> ReadAllCountries()
         {
-            var countries = new Dictionary<string, Country>();
+            List<Country> countries = new List<Country>();
 
             using (StreamReader sr = new StreamReader(_csvFilePath))
             {
@@ -25,13 +25,24 @@ namespace CSVCountryDemo
                 string csvLine;
                 while ((csvLine = sr.ReadLine()) != null)
                 {
-                    Country country = ReadCountryFromCsvLine(csvLine);
-
-                    countries.Add(country.Code, country);
+                    countries.Add(ReadCountryFromCsvLine(csvLine));
                 }
             }
 
             return countries;
+        }
+
+        public void RemoveCommaCountries(List<Country> countries)
+        {
+            // This removes countries with commas using the RemoveAll() method
+            countries.RemoveAll(x => x.Name.Contains(','));
+
+            // this removes countries with commas in a for loop (correctly, counting backwards)
+            // for (int i = countries.Count - 1; i >= 0; i--)
+            // {
+            //     if (countries[i].Name.Contains(','))
+            //         countries.RemoveAt(i);
+            // }
         }
 
         public Country ReadCountryFromCsvLine(string csvLine)
